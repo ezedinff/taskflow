@@ -91,10 +91,7 @@ The manual GitHub workflow uses `DOCKERHUB_USERNAME` / `DOCKERHUB_TOKEN` secrets
 ## Documentation
 
 - [Architecture and patterns](docs/architecture.md), [Mermaid diagram](docs/architecture-diagram.md)
-- [Design decisions](docs/design-decisions.md), [security and limitations](docs/security.md)
 - [Deployment and commands](docs/deployment.md), [scaling, failure and persistence demos](docs/scaling.md)
-- [Eight-minute speaking notes and terminal commands](docs/demo-script.md)
-- [Executed verification and acceptance evidence](docs/verification.md)
 
 Local Swagger UIs are available at `/docs` on each backend, or `/docs/projects/` and `/docs/tasks/` through the static frontend. API inputs use Zod, errors have `{error:{code,message,requestId}}`, and every response includes a generated request ID.
 
