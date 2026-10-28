@@ -158,6 +158,8 @@ docker login --username "$DOCKERHUB_USERNAME"
 
 Alternatively configure `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` GitHub secrets in an approval-protected `dockerhub` environment and manually run the Publish Docker Hub images workflow. It builds both amd64 and arm64 images tagged with the full commit SHA. No remote repository or published image is claimed until this is done.
 
+In the repository's **Settings → Environments → dockerhub → Environment secrets**, add `DOCKERHUB_USERNAME` (your Docker Hub username) and `DOCKERHUB_TOKEN` (a Docker Hub access token with write permission for the target image repositories). Both values must be nonempty and stored as secrets, not environment variables. The workflow checks these before setting up Docker. If it reports missing credentials, or Docker login reports `Username and password required`, configure these secrets and manually rerun the workflow. A code change alone cannot provide registry credentials.
+
 For registry-backed Kubernetes deployment, create a separate overlay that replaces all three image names and both migration Job images with `$DOCKERHUB_USERNAME/taskflow-…:$TAG` before applying. The script below prepares the manifests without modifying source:
 
 ```sh
