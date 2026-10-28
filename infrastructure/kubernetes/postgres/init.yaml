@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: taskflow
+data:
+  10-init.sh: |
+    #!/bin/sh
+    set -eu
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<'SQL'
+    \getenv project_password PROJECT_DB_PASSWORD
+    \getenv task_password TASK_DB_PASSWORD
+    CREATE ROLE project_user LOGIN PASSWORD :'project_password';
+    CREATE ROLE task_user LOGIN PASSWORD :'task_password';
+    REVOKE ALL ON SCHEMA public FROM PUBLIC;
+    REVOKE CREATE ON DATABASE taskflow FROM PUBLIC;
+    CREATE SCHEMA projects AUTHORIZATION project_user;
+    CREATE SCHEMA tasks AUTHORIZATION task_user;
+    REVOKE ALL ON SCHEMA projects FROM PUBLIC;
+    REVOKE ALL ON SCHEMA tasks FROM PUBLIC;
+    ALTER ROLE project_user SET search_path = projects;
+    ALTER ROLE task_user SET search_path = tasks;
+    SQL

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: private-database
+  namespace: taskflow
+spec:
+  podSelector:
+    matchLabels:
+      app: postgres
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - project-service
+                  - task-service
+                  - project-service-migrate
+                  - task-service-migrate
+      ports:
+        - protocol: TCP
+          port: 5432

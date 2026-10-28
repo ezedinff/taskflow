@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: project-service-config
+  namespace: taskflow
+data:
+  TASK_SERVICE_URL: http://task-service:3002
+  PORT: '3001'
+  LOG_LEVEL: info

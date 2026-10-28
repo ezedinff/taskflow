@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - postgres/init.yaml
+  - postgres/service.yaml
+  - postgres/statefulset.yaml
+  - project-service/configmap.yaml
+  - project-service/deployment.yaml
+  - project-service/service.yaml
+  - task-service/configmap.yaml
+  - task-service/deployment.yaml
+  - task-service/service.yaml
+  - frontend/deployment.yaml
+  - frontend/service.yaml
+  - security/network-policy.yaml
+  - security/project-service.yaml
+  - security/task-service.yaml
